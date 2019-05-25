@@ -12,6 +12,8 @@ import blueprints.jenkins
 
 app = flask.Flask(__name__)
 
+app.secret_key = 'raduken'
+
 app.register_blueprint(blueprints.auth.blueprint)
 app.register_blueprint(blueprints.docker.blueprint)
 app.register_blueprint(blueprints.gitlab.blueprint)
