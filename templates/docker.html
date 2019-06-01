@@ -6,23 +6,36 @@
 
 {% block content %}
 <table class="table table-hover table-dark">
-  <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Imagem</th>
-      <th scope="col">Status</th>
-      <th scope="col">Ações</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for c in context.containers %}
-    <th scope="row">{{ c.short_id }}</th>
-    <td>{{ c.image.tags[0] }}</td>
-    <td>{{ c.status }}</td>
-    <td>
-      
-    </td>
-    {% endfor %}
-  </tbody>
+	<thead>
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">Imagem</th>
+			<th scope="col">Status</th>
+			<th scope="col">Ações</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for c in context.containers %}
+		<tr>
+		<th scope="row">{{ c.short_id }}</th>
+		<td>{{ c.image.tags[0] }}</td>
+		<td>{{ c.status }}</td>
+		<td>
+			<div class='row'>
+				<div class='col-6'>
+					<a href="/docker/start/{{ c.short_id }}">
+						<i class="cstart fas fa-play"></i>
+					</a>
+				</div>
+				<div class='col-6'>
+				<a href="/docker/stop/{{ c.short_id }}">
+					<i class="cstop fas fa-stop"></i>
+				</a>
+				</div>
+			</div>
+		</td>
+		</tr>
+		{% endfor %}
+	</tbody>
 </table>
 {% endblock %}

@@ -9,3 +9,5 @@ RUN pip install -r requirements.txt
 
 CMD [ "python", "app.py" ]
 
+# // run: docker build -t flask-app .
+# // run: docker run -dti flask-app

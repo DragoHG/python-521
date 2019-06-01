@@ -8,6 +8,13 @@ body {
   display: none;
 }
 
+.cstop {
+  color: red;
+}
+.cstart {
+  color: aqua;
+}
+
 .alerts {
   position: absolute;
   top: 1%;
