@@ -12,7 +12,7 @@ import blueprints.jenkins
 
 app = flask.Flask(__name__)
 
-app.secret_key = 'raduken'
+app.secret_key = 'SECRET_KEY'
 
 app.register_blueprint(blueprints.auth.blueprint)
 app.register_blueprint(blueprints.docker.blueprint)
@@ -28,4 +28,4 @@ if __name__ == '__main__':
     current_module = os.path.dirname(os.path.curdir)
     sys.path.append(current_module)
 
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)

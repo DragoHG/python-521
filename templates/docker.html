@@ -5,41 +5,24 @@
 {% endblock %}
 
 {% block content %}
-<h2>{{ context.container.name }}</h2>
-<ul class="list-group mt-3">
-  <li class="list-group-item">
-    <div class="row">
-      <div class="col-2 text-center">
-        <i class="fas fa-hashtag"></i>
-      </div>
-      <div class="col-10">
-        {{ context.container.short_id }}
-      </div>
-    </div>
-  </li>
-  <li class="list-group-item">
-    <div class="row">
-      <div class="col-2 text-center">
-        <i class="fas fa-film"></i>
-      </div>
-      <div class="col-10">
-        {{ context.container.image.tags[0] }}
-      </div>
-    </div>
-  </li>
-  <li class="list-group-item">
-    <div class="row">
-      <div class="col-2 text-center">
-        <i class="fas fa-chart-bar"></i>
-      </div>
-      <div class="col-10">
-        {{ context.container.status }}
-      </div>
-    </div>    
-  </li>
-</ul>
-<div class="float-right mt-3">
-  <a class="btn btn-secondary mr-2" href="/docker/stop" title="Parar Container">Parar</a>
-  <a class="btn btn-primary" href="/docker/start" title="Iniciar Container">Iniciar</a>
-</div>
+<table class="table table-hover table-dark">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Imagem</th>
+      <th scope="col">Status</th>
+      <th scope="col">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for c in context.containers %}
+    <th scope="row">{{ c.short_id }}</th>
+    <td>{{ c.image.tags[0] }}</td>
+    <td>{{ c.status }}</td>
+    <td>
+      
+    </td>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}
