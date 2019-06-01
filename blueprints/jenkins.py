@@ -1,7 +1,14 @@
 
 import flask
+import jenkins
 
 blueprint = flask.Blueprint('jenkins', __name__)
+
+URL = 'http://localhost:8080'
+USER = '4linux'
+PASSWD = '123'
+
+connection = jenkins.Jenkins(URL, USER, PASSWD)
 
 @blueprint.route('/jenkins', methods=[ 'GET' ])
 def get_jenkins():
@@ -11,11 +18,15 @@ def get_jenkins():
         'route': {
             'is_public': False
         },
+        'jobs': [
+            connection.get_job_info(j['name'])
+                for j in connection.get_jobs()
+        ]
     }
 
     return flask.render_template('jenkins.html', context=context)
 
-@blueprint.route('/jenkins', methods=[ 'POST' ])
+@blueprint.route('/jenkins', methods=[ 'GET' ])
 def post_jenkins():
     pass
 
@@ -31,6 +42,8 @@ def get_jenkins_update(jobname):
 
     return flask.render_template('jenkins_update.html', context=context)
 
-@blueprint.route('/jenkins', methods=[ 'POST' ])
-def post_jenkins_update():
-    pass
+@blueprint.route('/jenkins/build/<string:jobname>', methods=[ 'GET' ])
+def get_jenkins_build(jobname):
+    connection.build_job(jobname)
+
+    return flask.redirect('/jenkins')
