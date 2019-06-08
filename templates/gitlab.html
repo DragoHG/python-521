@@ -3,16 +3,13 @@
 {% block header %}
 <div class="row">
   <div class="col-1">
-    <strong class="navbar-brand">Gitlab</strong>
+    <strong>Gitlab</strong>
   </div>
   <div class="col-8">
     <nav>
       <ul class="nav nav-pills">
         <li class="nav-item">
           <a class="nav-link {{ 'active' if context.current_tab == 'users' else '' }}" href="/gitlab?current_tab=users" title="Ver usuários">Usuários</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {{ 'active' if context.current_tab == 'projects' else '' }}" href="/gitlab?current_tab=projects" title="Ver projetos">Projetos</a>
         </li>
       </ul>
     </nav>
@@ -23,47 +20,53 @@
 {% block content %}
 <section id="users" class="{{ 'hidden' if context.current_tab == 'projects' else '' }}">
   <header class="mb-3">
-    <h2>Usuários</h2>
-  </header>
-  <table class="table table-hover table-striped">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Email</th>
-        <th scope="col">Usuário</th>
-        <th scope="col">Status</th>
-        <th scope="col">Admin</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>== Email do Usuário ==</td>
-        <td>== Nome do Usuário ==</td>
-        <td>== Status do Usuário ==</td>
-        <td>== Usuário é Admin ==</td>
-      </tr>
-    </tbody>
-  </table>
-</section>
-<section id="projects" class="{{ 'hidden' if context.current_tab == 'users' else '' }}">
-  <header class="mb-3">
     <h2>Projetos</h2>
   </header>
   <table class="table table-hover table-striped">
     <thead class="thead-dark">
       <tr>
-        <th scope="col">Nome do Projeto</th>
-        <th scope="col">Link SSH</th>
+        <th scope="col">ID</th>
+        <th scope="col">Nome</th>
         <th scope="col">Dono</th>
-        <th scope="col">Caminho</th>      
+        <th scope="col">Commits</th>
       </tr>
     </thead>
     <tbody>
+    {% for p in context.projects %}
       <tr>
-        <td>== Nome do Projeto ==</td>
-        <td>== SSH do Usuário ==</td>
-        <td>== Username do Dono do Projeto ==</td>
-        <td>== Caminho do Projeto ==</td>      
+        <td>{{ p.id }}</td>
+        <td>{{ p.name }}</td>
+        <td>{{ p.owner.name }}</td>
+        <td>
+          <a href="/gitlab/{{ p.id }}/commits" title="Commits do projeto {{ p.name }}">
+            <i class="fas fa-code-branch"></i>
+          </a>
+        </td>
       </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+<section id="projects" class="{{ 'hidden' if context.current_tab == 'users' else '' }}">
+  <header class="mb-3">
+    <h2>Commits</h2>
+  </header>
+  <table class="table table-hover table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Autor</th>
+        <th scope="col">Mensagem</th>
+        <th scope="col">Data</th>   
+      </tr>
+    </thead>
+    <tbody>
+    {% for c in context.repocommits %}
+      <tr>
+        <td>{{ c.author_name }}</td>
+        <td>{{ c.message }}</td>
+        <td>{{ c.authored_date }}</td> 
+      </tr>
+      {% endfor %}
     </tbody>
   </table>
 </section>
