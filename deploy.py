@@ -14,7 +14,7 @@ client.connect(
 
 commands = [
 	'sudo apt-get update -y',
-	'sudo apt-get install python3-pip -y',
+	'sudo apt-get install -y python3-pip',
 
 	'git clone https://github.com/DragoHG/python-521.git',
 	
